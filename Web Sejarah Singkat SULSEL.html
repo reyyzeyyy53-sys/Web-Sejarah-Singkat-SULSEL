@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jejak Gemilang Sulawesi Selatan - Sejarah Lengkap</title>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           CORE VARIABLES & RESET
+           ========================================= */
+        :root {
+            --bg-deep: #020617;
+            --bg-card: rgba(15, 23, 42, 0.8); /* Sedikit lebih gelap agar kontras dengan bg foto */
+            --gold-primary: #D4AF37;
+            --gold-light: #F9F1D8;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border-glass: 1px solid rgba(255, 255, 255, 0.1);
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            
+            /* =========================================
+               BACKGROUND WEBSITE (BARU)
+               ========================================= */
+            /* Menggunakan Foto Vintage Makassar 1920 sebagai latar seluruh website */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Makassar_in_the_1920s.jpg/1920px-Makassar_in_the_1920s.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Efek Parallax (Gambar diam saat scroll) */
+            background-repeat: no-repeat;
+        }
+
+        /* Overlay Gelap di atas Background agar teks terbaca */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.85); /* Warna biru tua transparan (85%) */
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 4px; }
+
+        /* =========================================
+           UTILITIES
+           ========================================= */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999; opacity: 0.05;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+        
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--gold-primary); }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 30%, var(--gold-primary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* =========================================
+           CUSTOM CURSOR
+           ========================================= */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 10000; pointer-events: none;
+        }
+        .cursor-dot { width: 6px; height: 6px; background-color: var(--gold-primary); }
+        .cursor-outline {
+            width: 40px; height: 40px; border: 1px solid rgba(212, 175, 55, 0.4);
+            transition: width 0.2s, height 0.2s;
+        }
+        body:hover .cursor-outline.hovered {
+            width: 70px; height: 70px; background-color: rgba(212, 175, 55, 0.05);
+            border-color: var(--gold-primary); mix-blend-mode: exclusion;
+        }
+        @media (hover: none) and (pointer: coarse) {
+            .cursor-dot, .cursor-outline { display: none; } *, *::before, *::after { cursor: auto; }
+        }
+
+        /* =========================================
+           LOADER
+           ========================================= */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-deep); z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .loader-text {
+            font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold-primary);
+            letter-spacing: 0.5em; animation: pulseText 2s infinite;
+        }
+        .loader-bar {
+            width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 20px; position: relative; overflow: hidden;
+        }
+        .loader-bar::after {
+            content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 0%;
+            background: var(--gold-primary); animation: loadProgress 2s ease forwards;
+        }
+        @keyframes loadProgress { to { width: 100%; } }
+        @keyframes pulseText { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; text-shadow: 0 0 20px var(--gold-primary); } }
+
+        /* =========================================
+           NAVBAR
+           ========================================= */
+        nav {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 600px; padding: 14px 40px;
+            background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(25px);
+            border-radius: 100px; border: var(--border-glass);
+            z-index: 1000; display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .logo { font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold-primary); font-size: 1rem; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a {
+            color: var(--text-main); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+            position: relative; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold-primary); }
+
+        /* =========================================
+           HERO
+           ========================================= */
+        header {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; text-align: center;
+        }
+        .hero-bg-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            /* Hero background khusus (Phinisi), akan menumpuk di atas background body */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Phinisi_Schooner.jpg/1920px-Phinisi_Schooner.jpg');
+            background-size: cover; background-position: center; opacity: 0.3; z-index: 0;
+            background-color: #0f172a;
+        }
+        .hero-gradient {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, var(--bg-deep) 0%, rgba(2,6,23,0.8) 50%, var(--bg-deep) 100%);
+            z-index: 1;
+        }
+        .hero-content { z-index: 2; opacity: 0; transform: translateY(40px); animation: heroEnter 1.2s var(--ease-out-expo) 0.8s forwards; max-width: 900px; padding: 0 20px; }
+        .hero-subtitle { font-size: 0.9rem; color: var(--gold-primary); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+        .hero-title { font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: 30px; font-weight: 700; }
+        .hero-desc { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        
+        .btn-primary {
+            display: inline-block; padding: 16px 40px; background: transparent;
+            color: var(--gold-primary); text-decoration: none;
+            border-radius: 4px; font-weight: 600; border: 1px solid var(--gold-primary); transition: 0.4s;
+        }
+        .btn-primary:hover { background: var(--gold-primary); color: #000; }
+
+        /* =========================================
+           SECTIONS & CARDS
+           ========================================= */
+        section { padding: 120px 0; position: relative; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-tag { font-size: 0.8rem; color: var(--gold-primary); letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 10px; }
+        .section-title { font-size: 2.5rem; color: #fff; }
+
+        .glass-card {
+            background: var(--bg-card); border: var(--border-glass);
+            border-radius: 12px; overflow: hidden;
+            backdrop-filter: blur(15px); transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .spotlight-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 2; opacity: 0; transition: opacity 0.3s;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+        }
+        .glass-card:hover .spotlight-layer { opacity: 1; }
+
+        .card-media {
+            width: 100%; height: 300px; overflow: hidden; position: relative;
+            background-color: #1e293b;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-media img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.7s var(--ease-out-expo);
+        }
+        .glass-card:hover .card-media img { transform: scale(1.05); }
+        
+        .card-content { padding: 30px; position: relative; z-index: 3; }
+        .card-title { font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
+        
+        .card-text {
+            color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; text-align: justify;
+        }
+        .card-text strong { color: #fff; }
+
+        /* =========================================
+           TIMELINE
+           ========================================= */
+        .timeline { position: relative; max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 50%; top: 0; height: 100%; width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--gold-primary), transparent); transform: translateX(-50%);
+        }
+        .t-item { display: flex; justify-content: center; align-items: center; margin-bottom: 120px; position: relative; opacity: 0; }
+        .t-dot {
+            position: absolute; left: 50%; width: 16px; height: 16px;
+            background: var(--bg-deep); border: 3px solid var(--gold-primary); border-radius: 50%;
+            transform: translateX(-50%); z-index: 2; transition: all 0.3s;
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+        .t-content {
+            width: 45%; background: var(--bg-card); padding: 35px; border-radius: 12px;
+            border: var(--border-glass); position: relative;
+        }
+        .t-item:nth-child(odd) { justify-content: flex-start; }
+        .t-item:nth-child(even) { justify-content: flex-end; }
+        .t-year {
+            font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--gold-primary);
+            margin-bottom: 15px; display: block; border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 10px;
+        }
+        .t-item:nth-child(odd) .t-content::after, 
+        .t-item:nth-child(even) .t-content::after {
+            content: ''; position: absolute; top: 30px; width: 30px; height: 2px;
+            background: var(--gold-primary); opacity: 0.5;
+        }
+        .t-item:nth-child(odd) .t-content::after { right: -30px; }
+        .t-item:nth-child(even) .t-content::after { left: -30px; }
+
+        /* =========================================
+           LAYOUTS
+           ========================================= */
+        .grid-2 {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px;
+        }
+
+        /* =========================================
+           ANIMATIONS
+           ========================================= */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s var(--ease-out-expo); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+        @keyframes heroEnter { to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            nav { justify-content: center; }
+            .timeline::before { left: 20px; }
+            .t-dot { left: 20px; }
+            .t-item { justify-content: flex-start !important; padding-left: 50px; }
+            .t-content { width: 100%; }
+            .t-item:nth-child(odd) .t-content::after, .t-item:nth-child(even) .t-content::after { display: none; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div id="loader">
+        <div class="loader-text">SULSEL</div>
+        <div class="loader-bar"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">SULSEL<span style="color:#fff; margin-left:5px;">ARCHIVE</span></div>
+        <ul class="nav-links">
+            <li><a href="#history" class="hover-trigger">Sejarah</a></li>
+            <li><a href="#videos" class="hover-trigger">Video</a></li>
+            <li><a href="#documents" class="hover-trigger">Arsip</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <header id="home">
+        <div class="hero-bg-img"></div>
+        <div class="hero-gradient"></div>
+        <div class="container hero-content">
+            <span class="hero-subtitle">Arsip Nasional</span>
+            <h1 class="hero-title">Sejarah Berdirinya<br><span class="text-gradient">Sulawesi Selatan</span></h1>
+            <p class="hero-desc">
+                Momen historis pembentukan Provinsi Sulawesi Selatan pada tahun 1960, menyatukan identitas Bugis, Makassar, Toraja, dan Mandar dalam satu wadah kebangsaan.
+            </p>
+            <a href="#history" class="btn-primary hover-trigger">Lihat Kronologi</a>
+        </div>
+    </header>
+
+    <!-- TIMELINE SECTION (EXPANDED) -->
+    <section id="history">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-tag">Latar Belakang</span>
+                <h2 class="section-title">Kronologi Lengkap Pembentukan</h2>
+            </div>
+
+            <div class="timeline">
+                <!-- Item 1: Negara Indonesia Timur -->
+                <div class="t-item reveal-up">
+                    <div class="t-dot"></div>
+                    <div class="t-content glass-card hover-trigger">
+                        <div class="spotlight-layer"></div>
+                        <span class="t-year">1950</span>
+                        <h3>Negara Indonesia Timur (NIT)</h3>
+                        <div class="card-text">
+                            Sebelum menjadi provinsi administratif, Sulawesi bagian selatan dan tengah merupakan bagian dari Negara Indonesia Timur (NIT), sebuah negara bagian dalam Republik Indonesia Serikat (RIS). Pada tahun 1950, NIT dibubarkan dan digabungkan ke dalam NKRI, menjadi dasar administrasi pertama yang disebut Provinsi Sulawesi yang mencakup seluruh pulau.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2: Pasca Kemerdekaan -->
+                <div class="t-item reveal-up">
+                    <div class="t-dot"></div>
+                    <div class="t-content glass-card hover-trigger">
+                        <div class="spotlight-layer"></div>
+                        <span class="t-year">14 Agustus 1950</span>
+                        <h3>Provinsi Administratif Sulawesi</h3>
+                        <div class="card-text">
+                            Setelah pembubaran NIT dan RIS, pemerintah membentuk "Provinsi Administratif Sulawesi". Namun, luas wilayah yang mencakup seluruh Sulawesi ini sangat menyulitkan pengelolaan birokrasi dan pemerataan pembangunan, memicu lahirnya gerakan aspirasi untuk pemekaran wilayah (pemekaran daerah).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Pemberontakan Permesta -->
+                <div class="t-item reveal-up">
+                    <div class="t-dot"></div>
+                    <div class="t-content glass-card hover-trigger">
+                        <div class="spotlight-layer"></div>
+                        <span class="t-year">1957 - 1961</span>
+                        <h3>Konteks Permesta</h3>
+                        <div class="card-text">
+                            Muncul gerakan perlawanan Permesta (Piagam Perjuangan Semesta Alam) di Manado dan sekitarnya menuntut otonomi yang lebih luas dan pemerataan ekonomi. Ketegangan politik ini mempercepat diskusi nasional mengenai pembentukan provinsi-provinsi baru di Indonesia Timur sebagai solusi jangka panjang untuk stabilitas daerah.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4: Resmi Berdiri -->
+                <div class="t-item reveal-up">
+                    <div class="t-dot"></div>
+                    <div class="t-content glass-card hover-trigger">
+                        <div class="spotlight-layer"></div>
+                        <span class="t-year">13 Desember 1960</span>
+                        <h3>UU No. 47 Tahun 1960</h3>
+                        <div class="card-text">
+                            Presiden Soekarno menandatangani Undang-Undang Nomor 47 Tahun 1960 yang secara resmi membentuk "Provinsi Sulawesi Selatan dan Tenggara". Makassar (kala itu Ujung Pandang) ditetapkan sebagai ibu kota provinsi. Tanggal ini kemudian diperingati sebagai hari jadi provinsi.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5: Pemisahan Sulawesi Tenggara -->
+                <div class="t-item reveal-up">
+                    <div class="t-dot"></div>
+                    <div class="t-content glass-card hover-trigger">
+                        <div class="spotlight-layer"></div>
+                        <span class="t-year">1964</span>
+                        <h3>Pemisahan Sulawesi Tenggara</h3>
+                        <div class="card-text">
+                            Berkembangnya dinamika di wilayah Sulawesi Tenggara (Kendari, Kolaka, dll) membutuhkan pemerintahan yang lebih fokus. Pada tahun 1964, pemerintah pusat mengeluarkan UU No. 13 Tahun 1964 yang memisahkan Sulawesi Tenggara dari Provinsi Sulawesi Selatan, menjadikan Sulsel sebagai entitas provinsi tunggal yang kita kenal saat ini.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6: Pemisahan Sulawesi Barat -->
+                <div class="t-item reveal-up">
+                    <div class="t-dot"></div>
+                    <div class="t-content glass-card hover-trigger">
+                        <div class="spotlight-layer"></div>
+                        <span class="t-year">2004</span>
+                        <h3>Pembentukan Sulawesi Barat</h3>
+                        <div class="card-text">
+                            Seiring reformasi dan desakan otonomi daerah di era 2000-an, wilayah Mandar di bagian barat akhirnya resmi dimekarkan. Melalui UU No. 26 Tahun 2004, Sulawesi Barat (Sulbar) resmi menjadi provinsi sendiri, lepas dari wilayah administrasi Sulawesi Selatan.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO SECTION -->
+    <section id="videos">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-tag">Multimedia Edukasi</span>
+                <h2 class="section-title">Dokumenter Sejarah</h2>
+            </div>
+
+            <div class="grid-2">
+                <!-- Video 1 -->
+                <div class="glass-card reveal-up hover-trigger">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                                src="https://www.youtube.com/embed/iLsBKnb9jv8" title="Sejarah Sulsel Awal" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div style="padding: 25px;">
+                        <h4 style="color:#fff; margin-bottom:10px;">Sejarah Sulawesi Selatan: Awal Peradaban</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">
+                            Video ini mengulas dari masa pra-sejarah hingga kerajaan, menjelaskan latar belakang terbentuknya identitas Sulsel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="glass-card reveal-up hover-trigger">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                                src="https://www.youtube.com/embed/th63TP0Y6zA" title="Kerajaan Bone dan Gowa" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div style="padding: 25px;">
+                        <h4 style="color:#fff; margin-bottom:10px;">Sejarah Berdirinya Bone & Gowa</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">
+                            Memahami dinamika politik antar kerajaan di Sulawesi Selatan yang menjadi basis wilayah administratif pada tahun 1960.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="glass-card reveal-up hover-trigger">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                                src="https://www.youtube.com/embed/Wu0S-d3HOHA" title="Arung Palakka" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div style="padding: 25px;">
+                        <h4 style="color:#fff; margin-bottom:10px;">Arung Palakka: Sang Fenomenal</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">
+                            Kisah heroik Arung Palakka yang menjadi jiwa perlawanan rakyat, nilai yang terus dipegang dalam pembentukan karakter provinsi.
+                        </p>
+                    </div>
+                </div>
+
+                 <!-- Video 4 -->
+                 <div class="glass-card reveal-up hover-trigger">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                                src="https://www.youtube.com/embed/PZEau-5seD0" title="Sejarah Awal Wajo" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div style="padding: 25px;">
+                        <h4 style="color:#fff; margin-bottom:10px;">Sejarah Awal Kabupaten Wajo</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">
+                            Dokumentasi film "Lipa' Sabbe" mengenai sejarah Wajo, salah satu konstituen utama provinsi Sulawesi Selatan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOCUMENTS -->
+    <section id="documents">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-tag">Hukum & Arsip</span>
+                <h2 class="section-title">Dokumen Resmi</h2>
+            </div>
+            <div class="grid-2">
+                <div class="glass-card hover-trigger reveal-up" style="text-align:center; padding:40px;">
+                    <h3 style="color:var(--gold-primary); font-size:3rem; margin-bottom:10px;">📜</h3>
+                    <h4 style="color:#fff; margin-bottom:10px;">UU No. 47/1960</h4>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">Naskah Undang-Undang pembentukan Provinsi Sulawesi Selatan dan Tenggara.</p>
+                </div>
+                <div class="glass-card hover-trigger reveal-up" style="text-align:center; padding:40px;">
+                    <h3 style="color:var(--gold-primary); font-size:3rem; margin-bottom:10px;">🗺️</h3>
+                    <h4 style="color:#fff; margin-bottom:10px;">Peta Wilayah 1960</h4>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">Peta batas wilayah administratif saat awal pembentukan provinsi.</p>
+                </div>
+                <div class="glass-card hover-trigger reveal-up" style="text-align:center; padding:40px;">
+                    <h3 style="color:var(--gold-primary); font-size:3rem; margin-bottom:10px;">🖋️</h3>
+                    <h4 style="color:#fff; margin-bottom:10px;">Dekrit Presiden</h4>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">Arsip keputusan presiden terkait struktur pemerintahan daerah.</p>
+                </div>
+                <div class="glass-card hover-trigger reveal-up" style="text-align:center; padding:40px;">
+                    <h3 style="color:var(--gold-primary); font-size:3rem; margin-bottom:10px;">🏛️</h3>
+                    <h4 style="color:#fff; margin-bottom:10px;">Lontara Bugis</h4>
+                    <p style="color:var(--text-muted); font-size:0.9rem;">Koleksi naskah kuno berbahan lontar yang menceritakan silsilah raja dan hukum adat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER WITH CREATOR CREDIT -->
+    <footer style="border-top: var(--border-glass); padding: 100px 0 60px; text-align: center; background: rgba(2, 6, 23, 0.95);">
+        <div class="container">
+            <h2 style="font-family: 'Cinzel', serif; color: var(--gold-primary); margin-bottom: 30px; font-size: 2.5rem;">SULSEL</h2>
+            
+            <!-- Creator Section -->
+            <div style="margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <p style="color: rgba(255,255,255,0.4); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px;">Website Dibuat Oleh</p>
+                
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                    <a href="https://www.instagram.com/ikk05__" target="_blank" class="hover-trigger" style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; text-decoration: none; transition: 0.3s;">
+                        Reski Ardiansyah
+                    </a>
+                    <a href="https://www.instagram.com/ikk05__" target="_blank" class="hover-trigger" style="color: var(--gold-primary); text-decoration: none; font-size: 1rem; margin-top: 5px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px;">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.281.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.599-.92c-.11-.281-.24-.705-.275-1.485-.039-.843-.047-1.096-.047-3.232 0-2.136.008-2.388.047-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/></svg>
+                        @ikk05__
+                    </a>
+                </div>
+            </div>
+
+            <p style="color: rgba(255,255,255,0.3); font-size: 0.8rem;">&copy; 2023 Sejarah Berdirinya Sulawesi Selatan. Arsip Digital Resmi.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // 1. Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 1500);
+        });
+
+        // 2. Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX; const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`; cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+        });
+
+        document.querySelectorAll('.hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered'));
+        });
+
+        // 3. Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+
+        // 4. Spotlight Effect
+        const cards = document.querySelectorAll('.glass-card');
+        document.addEventListener('mousemove', (e) => {
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 5. ROBUST IMAGE HANDLER
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.onerror = function() {
+                    this.src = 'https://placehold.co/600x400/0f172a/D4AF37?text=Gambar+Tidak+Tersedia&font=playfair';
+                    this.onerror = null;
+                };
+            });
+        });
+    </script>
+</body>
+</html>
